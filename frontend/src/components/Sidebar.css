@@ -1,0 +1,98 @@
+/* ── Sidebar ─────────────────────────────────────── */
+/* Extends the existing theme - do not change colors/fonts */
+
+.sidebar {
+  width: 220px;
+  background: rgba(10, 2, 30, 0.97);
+  border-right: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(16px);
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 200;
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.4);
+  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar-title {
+  font-family: 'Playfair Display', serif;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+  padding: 0 10px;
+  margin-bottom: 16px;
+}
+
+.sidebar-item {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.75);
+  padding: 11px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: left;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.2s, border-color 0.2s, transform 0.15s, color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.sidebar-item-icon {
+  font-size: 15px;
+  flex-shrink: 0;
+  opacity: 0.8;
+}
+
+.sidebar-item:hover {
+  background: rgba(147, 51, 234, 0.22);
+  border-color: rgba(147, 51, 234, 0.35);
+  transform: translateX(2px);
+  color: #ffffff;
+}
+
+.sidebar-item.active {
+  background: linear-gradient(135deg, #9333ea, #7c3aed);
+  border-color: transparent;
+  box-shadow: 0 4px 14px rgba(147, 51, 234, 0.5);
+  color: #ffffff;
+}
+
+.sidebar-item.active .sidebar-item-icon {
+  opacity: 1;
+}
+
+/* Mobile overlay */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 199;
+  backdrop-filter: blur(2px);
+}
+
+/* ── Responsive ──────────────────────────────────── */
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+    width: 240px;
+  }
+
+  .sidebar.sidebar-open {
+    transform: translateX(0);
+    box-shadow: 8px 0 32px rgba(0, 0, 0, 0.6);
+  }
+
+  .sidebar-overlay {
+    display: block;
+  }
+}

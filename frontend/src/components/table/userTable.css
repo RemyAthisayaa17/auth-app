@@ -1,0 +1,336 @@
+.table-wrapper {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
+  width: 100%;
+}
+
+/* ── Controls ───────────────────────────────────────── */
+.table-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.table-controls-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.records-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 500;
+}
+
+.records-select {
+  height: 34px;
+  padding: 0 28px 0 10px;
+  border-radius: 7px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  outline: none;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='rgba(255,255,255,0.5)' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 9px center;
+  transition: border-color 0.2s;
+}
+
+.records-select:focus {
+  border-color: rgba(147, 51, 234, 0.7);
+}
+
+.records-select option {
+  background: #2d0a5e;
+  color: #fff;
+}
+
+.table-controls-right {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  max-width: 360px;
+  margin-left: auto;
+}
+
+.search-box {
+  position: relative;
+  width: 100%;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  color: rgba(255, 255, 255, 0.4);
+  pointer-events: none;
+}
+
+.search-input {
+  width: 100%;
+  height: 36px;
+  padding: 0 14px 0 38px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.07);
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13.5px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.search-input::placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.search-input:focus {
+  border-color: rgba(147, 51, 234, 0.7);
+  box-shadow: 0 0 0 3px rgba(147, 51, 234, 0.15);
+}
+
+/* ── Table ──────────────────────────────────────────── */
+.table-scroll {
+  overflow-x: auto;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.data-table thead tr {
+  background: rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.data-table th {
+  padding: 13px 16px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: rgba(255, 255, 255, 0.966);
+  white-space: nowrap;
+}
+
+.th-num, .td-num {
+  width: 48px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.884);
+  font-size: 12px;
+}
+
+.th-sortable {
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.15s;
+}
+
+.th-sortable:hover {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.th-inner {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.sort-icon {
+  display: inline-flex;
+  align-items: center;
+  font-size: 12px;
+  opacity: 0.4;
+}
+
+.sort-none {
+  flex-direction: column;
+  gap: 0;
+  line-height: 0.6;
+}
+
+.sort-active {
+  opacity: 1;
+  color: #c084fc;
+}
+
+.th-actions {
+  text-align: center;
+}
+
+.data-table tbody tr {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  transition: background 0.15s;
+}
+
+.data-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.data-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.data-table td {
+  padding: 13px 16px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.973);
+  vertical-align: middle;
+}
+
+.td-empty {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.4);
+  padding: 48px !important;
+  font-size: 14px;
+}
+
+.table-loading {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 14px;
+}
+
+/* ── Gender badge ───────────────────────────────────── */
+.gender-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.gender-male {
+  background: rgba(59, 130, 246, 0.2);
+  color: #93c5fd;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.gender-female {
+  background: rgba(244, 114, 182, 0.2);
+  color: #f9a8d4;
+  border: 1px solid rgba(244, 114, 182, 0.3);
+}
+
+/* ── Actions ────────────────────────────────────────── */
+.td-actions {
+  text-align: center;
+  white-space: nowrap;
+}
+
+.action-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 7px;
+  font-size: 16px;
+  transition: background 0.15s, color 0.15s, transform 0.15s;
+  margin: 0 2px;
+}
+
+.action-btn:hover {
+  transform: translateY(-1px);
+}
+
+.view-btn {
+  color: #93c5fd;
+}
+.view-btn:hover {
+  background: rgba(59, 130, 246, 0.15);
+  color: #bfdbfe;
+}
+
+.edit-btn {
+  color: #86efac;
+}
+.edit-btn:hover {
+  background: rgba(34, 197, 94, 0.15);
+  color: #bbf7d0;
+}
+
+.delete-btn {
+  color: #fca5a5;
+}
+.delete-btn:hover {
+  background: rgba(239, 68, 68, 0.15);
+  color: #fecaca;
+}
+
+/* ── Footer / Pagination ────────────────────────────── */
+.table-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.pagination-info {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.904);
+}
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.page-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 7px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.884);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.page-btn:hover:not(:disabled) {
+  background: rgba(147, 51, 234, 0.25);
+  color: #fff;
+  border-color: rgba(147, 51, 234, 0.4);
+}
+
+.page-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.page-indicator {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  color: rgb(255, 255, 255);
+  padding: 0 8px;
+  min-width: 60px;
+  text-align: center;
+}

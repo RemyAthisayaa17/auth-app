@@ -1,0 +1,260 @@
+/* ProfileCard.css — matches existing dashboard theme */
+
+.profile-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 24px;
+  padding: 48px 48px 40px;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* ── Edit button (top-right) ─────────────────────── */
+.profile-edit-btn-wrap {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.profile-edit-icon-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.65);
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, border-color 0.18s, transform 0.15s;
+}
+
+.profile-edit-icon-btn:hover {
+  background: linear-gradient(135deg, #9333ea, #7c3aed);
+  border-color: transparent;
+  color: #ffffff;
+  transform: scale(1.08);
+  box-shadow: 0 4px 14px rgba(147, 51, 234, 0.45);
+}
+
+/* Tooltip */
+.profile-edit-btn-wrap {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.profile-edit-tooltip {
+  position: absolute;
+  top: calc(100% + 7px);
+  right: 0;
+  background: rgba(20, 4, 48, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 0.15s, transform 0.15s;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.profile-edit-btn-wrap:hover .profile-edit-tooltip {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Avatar ──────────────────────────────────────── */
+.profile-card-avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #9333ea, #7c3aed);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 30px;
+  color: #ffffff;
+  font-weight: 600;
+  margin: 0 auto 16px;
+  text-transform: uppercase;
+  box-shadow: 0 8px 24px rgba(147, 51, 234, 0.45);
+  letter-spacing: -1px;
+}
+
+.profile-card-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  color: #ffffff;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.profile-card-email {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.55);
+  text-align: center;
+  margin-bottom: 28px;
+  font-family: 'DM Sans', sans-serif;
+}
+
+/* ── Form Fields ─────────────────────────────────── */
+.profile-card-form {
+  width: 100%;
+}
+
+.profile-card-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.profile-card-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.profile-card-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: rgba(255, 255, 255, 0.6);
+  font-family: 'DM Sans', sans-serif;
+}
+
+.profile-card-input {
+  width: 100%;
+  height: 42px;
+  padding: 0 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.07);
+  color: #ffffff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.profile-card-input:focus {
+  border-color: rgba(147, 51, 234, 0.75);
+  box-shadow: 0 0 0 3px rgba(147, 51, 234, 0.18);
+  background: rgba(255, 255, 255, 0.09);
+}
+
+.profile-card-input.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.profile-card-input.has-error {
+  border-color: rgba(239, 68, 68, 0.7);
+}
+
+.profile-card-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(255,255,255,0.5)' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 32px;
+  cursor: pointer;
+}
+
+.profile-card-select option {
+  background: #2d0a5e;
+  color: #fff;
+}
+
+.profile-card-error {
+  font-size: 11.5px;
+  color: #ff6b6b;
+  margin-top: 1px;
+  font-family: 'DM Sans', sans-serif;
+}
+
+/* ── Footer Buttons ──────────────────────────────── */
+.profile-card-footer {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.profile-card-btn {
+  height: 40px;
+  padding: 0 22px;
+  border-radius: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.18s, transform 0.18s, background 0.2s, box-shadow 0.2s;
+  letter-spacing: 0.1px;
+}
+
+.profile-card-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.profile-card-btn-cancel {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.profile-card-btn-cancel:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.profile-card-btn-save {
+  background: rgba(147, 51, 234, 0.25);
+  color: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(147, 51, 234, 0.35);
+}
+
+.profile-card-btn-save:hover:not(:disabled) {
+  background: linear-gradient(135deg, #9333ea, #7c3aed);
+  color: #ffffff;
+  border-color: transparent;
+  box-shadow: 0 6px 20px rgba(147, 51, 234, 0.45);
+  transform: translateY(-1px);
+}
+
+/* ── Responsive ──────────────────────────────────── */
+@media (max-width: 600px) {
+  .profile-card {
+    padding: 40px 24px 32px;
+    border-radius: 18px;
+  }
+
+  .profile-card-footer {
+    flex-direction: column-reverse;
+  }
+
+  .profile-card-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
