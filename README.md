@@ -200,6 +200,3 @@ PORT=
 * Docker integration
 * Unit & integration testing
 * Deployment pipeline (CI/CD)
-
-
-```
