@@ -1,7 +1,7 @@
 
 # 🚀 Full-Stack User Management System
 
-A production-grade full-stack web application built with **React, Node.js, Express, Sequelize ORM, and SQL server Management Studio**, featuring authentication, role-based access control, and a strictly separated validation architecture using **Yup (frontend)** and **Zod (backend)**.
+A production-grade full-stack web application built with **React, Node.js, Express, Sequelize ORM, and Microsoft SQL Server (MSSQL)**, featuring authentication, role-based access control, and a strictly separated validation architecture using **Yup (frontend)** and **Zod (backend)**.
 
 ---
 
@@ -32,7 +32,7 @@ A production-grade full-stack web application built with **React, Node.js, Expre
 - Express.js
 - Sequelize ORM
 - Zod (Validation Middleware)
-- SQL Server Management studio
+- Microsoft SQL Server (MSSQL)
 
 ---
 
