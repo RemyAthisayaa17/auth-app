@@ -1,12 +1,19 @@
-import User from '../sequelize/models/User.js'
 import { Op } from 'sequelize'
+import User from '../sequelize/models/User.js'
 
-// ─────────────────────────────────────────────────────────────────────────────
-// getUsers — Sequelize
-// ─────────────────────────────────────────────────────────────────────────────
+// Fields returned to the client — defined once, reused everywhere
+const USER_ATTRIBUTES = ['id', 'username', 'email', 'phone', 'gender', 'address']
+
+// Fields accepted when creating or updating a user
+const WRITABLE_FIELDS = ['username', 'email', 'phone', 'gender', 'address']
+
+function pickWritableFields(data) {
+  return Object.fromEntries(
+    WRITABLE_FIELDS.map((key) => [key, data[key]])
+  )
+}
+
 export async function getUsers({ page, limit, search, sort, order }) {
-
-
   const offset = (page - 1) * limit
 
   const where = {
@@ -14,26 +21,20 @@ export async function getUsers({ page, limit, search, sort, order }) {
       {
         [Op.or]: [
           { username: { [Op.like]: `%${search}%` } },
-          { email:    { [Op.like]: `%${search}%` } },
-          { phone:    { [Op.like]: `%${search}%` } }
-        ]
+          { email: { [Op.like]: `%${search}%` } },
+          { phone: { [Op.like]: `%${search}%` } },
+        ],
       },
-      {
-        email: { [Op.ne]: 'admin@gmail.com' }
-      }
-    ]
+      { email: { [Op.ne]: 'admin@gmail.com' } },
+    ],
   }
-
-  const validSort  = ['username', 'email', 'phone', 'gender'].includes(sort)
-    ? sort : 'username'
-  const validOrder = order === 'DESC' ? 'DESC' : 'ASC'
 
   const { rows, count } = await User.findAndCountAll({
     where,
-    order: [[validSort, validOrder]],
+    order: [[sort, order]],
     offset,
     limit,
-    attributes: ['id', 'username', 'email', 'phone', 'gender', 'address'],
+    attributes: USER_ATTRIBUTES,
   })
 
   return {
@@ -45,47 +46,21 @@ export async function getUsers({ page, limit, search, sort, order }) {
   }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// getUserById — Sequelize
-// ─────────────────────────────────────────────────────────────────────────────
 export async function getUserById(id) {
-  const user = await User.findByPk(id, {
-    attributes: ['id', 'username', 'email', 'phone', 'gender', 'address']
-  })
-
+  const user = await User.findByPk(id, { attributes: USER_ATTRIBUTES })
   return user || null
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// updateUser — Sequelize
-// ─────────────────────────────────────────────────────────────────────────────
 export async function updateUser(id, data) {
-  const { username, email, phone, gender, address } = data
-
   const user = await User.findByPk(id)
   if (!user) return null
 
-  await user.update({
-    username,
-    email,
-    phone,
-    gender,
-    address
-  })
+  const fields = pickWritableFields(data)
+  await user.update(fields)
 
-  return {
-    id,
-    username,
-    email,
-    phone,
-    gender,
-    address
-  }
+  return { id, ...fields }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// deleteUser — Sequelize
-// ─────────────────────────────────────────────────────────────────────────────
 export async function deleteUser(id) {
   const user = await User.findByPk(id)
   if (!user) return false

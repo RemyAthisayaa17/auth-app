@@ -1,16 +1,47 @@
-export function setUser(user) {
-  localStorage.setItem('user', JSON.stringify(user))
+import { ROLES } from '../constants/roles.js'
+import { saveToken, removeToken } from './tokenStorage.js'
+
+const USER_KEY = 'user'
+
+/**
+ * Normalizes a raw user object coming from the API.
+ * Role is always lowercased here — no other file needs to do this.
+ */
+function normalizeUser(rawUser) {
+  return {
+    ...rawUser,
+    role: (rawUser?.role || '').toLowerCase() || ROLES.USER,
+  }
+}
+
+export function saveSession(rawUser, token) {
+  const user = normalizeUser(rawUser)
+  localStorage.setItem(USER_KEY, JSON.stringify(user))
+  saveToken(token)
 }
 
 export function getUser() {
   try {
-    const user = localStorage.getItem('user')
-    return user ? JSON.parse(user) : null
-  } catch (err) {
+    const stored = localStorage.getItem(USER_KEY)
+    return stored ? JSON.parse(stored) : null
+  } catch {
     return null
   }
 }
 
+export function clearSession() {
+  localStorage.removeItem(USER_KEY)
+  removeToken()
+}
+
+export function isAdmin(user) {
+  return user?.role === ROLES.ADMIN
+}
+
+export function setUser(user) {
+  saveSession(user, null)
+}
+
 export function logoutUser() {
-  localStorage.removeItem('user')
+  clearSession()
 }

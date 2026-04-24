@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { Link, useNavigate } from 'react-router-dom'
 import { loginSchema } from '../validation/validation.js'
 import { loginUser } from '../services/api'
-import { setUser } from '../utils/auth'
+import { saveSession, isAdmin } from '../utils/auth'
 import { toast } from '../components/Toast'
 import './login.css'
 
@@ -35,65 +35,44 @@ export default function Login() {
   const [loading, setLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
+  const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(loginSchema),
     mode: 'onTouched',
   })
 
   async function onSubmit(data) {
-  setServerError('')
-  setLoading(true)
+    setServerError('')
+    setLoading(true)
 
-  try {
-    const res = await loginUser(data)
+    try {
+      // api.js unwraps one level → res is { success, message, data: { user, token } }
+      const res = await loginUser(data)
+      const { user: rawUser, token } = res.data
 
-    // ✅ SAFE RESPONSE HANDLING (FIX)
-    const userData = res?.data
+      if (!rawUser?.email) throw new Error(res.message || 'Invalid login response')
 
-    if (!userData || !userData.email) {
-      throw new Error(res?.message || 'Invalid login response')
+      // saveSession normalizes role, persists user + token — no logic here
+      saveSession(rawUser, token)
+
+      if (isAdmin(rawUser)) {
+        toast('Welcome Admin!', 'success')
+        navigate('/admin', { replace: true })
+      } else {
+        toast('Login successful! Welcome back.', 'success')
+        navigate('/dashboard', { replace: true })
+      }
+    } catch (err) {
+      const msg =
+        err?.response?.data?.message ||
+        err?.message ||
+        'Login failed. Please try again.'
+
+      setServerError(msg)
+      toast(msg, 'error')
+    } finally {
+      setLoading(false)
     }
-
-    const user = {
-      ...userData,
-      role: userData.role ? userData.role.toLowerCase() : 'user',
-    }
-
-    setUser(user)
-
-    console.log('LOGIN USER FINAL:', user)
-
-    const role = (user?.role || '').toString().trim().toLowerCase()
-
-console.log("ROLE CHECK:", role)
-
-if (role === 'admin') {
-  toast('Welcome Admin!', 'success')
-  navigate('/admin', { replace: true })
-} else {
-  toast('Login successful! Welcome back.', 'success')
-  navigate('/dashboard', { replace: true })
-}
-
-  } catch (err) {
-    console.log('LOGIN ERROR:', err)
-
-    const msg =
-      err?.response?.data?.message ||
-      err?.message ||
-      'Login failed. Please try again.'
-
-    setServerError(msg)
-    toast(msg, 'error')
-
-  } finally {
-    setLoading(false)
   }
-}  
 
   return (
     <div className="auth-bg no-scroll">
@@ -138,7 +117,7 @@ if (role === 'admin') {
               <button
                 type="button"
                 className="eye-btn"
-                onClick={() => setShowPassword(v => !v)}
+                onClick={() => setShowPassword((v) => !v)}
               >
                 {showPassword ? <EyeOff /> : <EyeOpen />}
               </button>

@@ -39,11 +39,10 @@ export const registerSchema = Yup.object({
     .oneOf(['male', 'female'], 'Select a valid gender'),
 
   address: Yup.string()
-  .required('Address is required')
-  .max(200, 'Address exceeds the allowed character limit. Please shorten it.')
+    .required('Address is required')
+    .max(200, 'Address exceeds the allowed character limit. Please shorten it.'),
 })
 
-// For editing an existing user (no password field)
 export const editUserSchema = Yup.object({
   username: Yup.string()
     .required('Username is required')
@@ -62,7 +61,7 @@ export const editUserSchema = Yup.object({
     .required('Gender is required')
     .oneOf(['male', 'female'], 'Select a valid gender'),
 
- address: Yup.string()
-  .required('Address is required')
-  .max(200, 'Address exceeds the allowed character limit. Please shorten it.')
+  address: Yup.string()
+    .required('Address is required')
+    .max(200, 'Address exceeds the allowed character limit. Please shorten it.'),
 })

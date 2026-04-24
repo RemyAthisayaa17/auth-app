@@ -1,55 +1,37 @@
 import User from '../sequelize/models/User.js'
+import { AUTH_RESULT } from '../constants/authConstants.js'
+import { serviceResult } from '../common/serviceResult.js'
 
-// registerUser stays unchanged
 export async function registerUser(data) {
   const { username, email, password, phone, gender, address } = data
 
-  const existingUser = await User.findOne({
-    where: { email }
-  })
+  const existingUser = await User.findOne({ where: { email } })
+  if (existingUser) return serviceResult(AUTH_RESULT.EMAIL_EXISTS)
 
-  if (existingUser) return 'EXISTS'
+  await User.create({ username, email, password, phone, gender, address })
 
-  await User.create({
-    username,
-    email,
-    password,
-    phone,
-    gender,
-    address
-  })
-
-  return 'CREATED'
+  return serviceResult(AUTH_RESULT.CREATED)
 }
 
-// loginUser FIXED ONLY ROLE SAFETY
 export async function loginUser(data) {
   const { email, password } = data
 
-  const user = await User.findOne({
-    where: { email }
-  })
+  const user = await User.findOne({ where: { email } })
+  if (!user) return serviceResult(AUTH_RESULT.USER_NOT_FOUND)
 
-  if (!user) {
-    return { user: null, reason: 'NOT_FOUND' }
+  if (user.password !== password) return serviceResult(AUTH_RESULT.WRONG_PASSWORD)
+
+  const raw = user.toJSON()
+
+  const safeUser = {
+    id: raw.id,
+    username: raw.username,
+    email: raw.email,
+    phone: raw.phone,
+    gender: raw.gender,
+    address: raw.address,
+    role: raw.role ? raw.role.toLowerCase() : 'user',
   }
 
-  if (user.password !== password) {
-    return { user: null, reason: 'WRONG_PASSWORD' }
-  }
-
-  const cleanUser = user.toJSON()
-
-  return {
-    user: {
-      id: cleanUser.id,
-      username: cleanUser.username,
-      email: cleanUser.email,
-      phone: cleanUser.phone,
-      gender: cleanUser.gender,
-      address: cleanUser.address,
-      role: cleanUser.role ? cleanUser.role.toLowerCase() : 'user'
-    },
-    reason: null
-  }
+  return serviceResult(AUTH_RESULT.SUCCESS, safeUser)
 }
