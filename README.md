@@ -1,108 +1,118 @@
-
 # 🚀 Full-Stack User Management System
 
-A production-grade full-stack web application built with **React, Node.js, Express, Sequelize ORM, and Microsoft SQL Server (MSSQL)**, featuring authentication, role-based access control, and a strictly separated validation architecture using **Yup (frontend)** and **Zod (backend)**.
+A production-ready full-stack web application built with **React, Node.js, Express, Sequelize ORM, and Microsoft SQL Server (MSSQL)**.
+This system implements secure authentication, role-based access control, and a strictly separated validation architecture using **Yup (frontend)** and **Zod (backend)**.
 
 ---
 
-## ✨ Key Highlights
+## ✨ Key Features
 
-- 🔐 Secure Authentication (Register / Login)
-- 👤 Full User Management (CRUD Operations)
-- 🧑‍💼 Admin Dashboard with advanced controls
-- 🔍 Search, Sort, Pagination support
-- ⚙️ Strict validation architecture (Yup + Zod separation)
-- 🧠 Clean layered backend architecture (Controller → Service → DB)
-- 🧩 Modular and reusable React components
-- 📦 Sequelize ORM-based database design
+* 🔐 JWT-based Authentication (Register / Login)
+* 👤 Complete User Management (CRUD Operations)
+* 🧑‍💼 Role-based Access Control (Admin / User)
+* 🔍 Search, Sorting, and Pagination
+* ⚙️ Strict Validation Architecture (Yup + Zod separation)
+* 🧠 Clean Backend Architecture (Controller → Service → DB)
+* 🧩 Modular and reusable React components
+* 📦 Sequelize ORM with MSSQL integration
 
 ---
 
 ## 🏗️ Tech Stack
 
 ### Frontend
-- React.js
-- React Hook Form
-- Yup (Validation Layer)
-- Axios
-- CSS (Modular styling)
+
+* React.js (Vite)
+* React Hook Form
+* Yup (Validation Layer)
+* Axios
+* Modular CSS
 
 ### Backend
-- Node.js
-- Express.js
-- Sequelize ORM
-- Zod (Validation Middleware)
-- Microsoft SQL Server (MSSQL)
+
+* Node.js
+* Express.js
+* Sequelize ORM
+* Zod (Validation Middleware)
+* Microsoft SQL Server (MSSQL)
 
 ---
 
-## 🧠 Architecture Design
+## 🧠 Architecture Overview
+
+### Frontend Flow
 
 ```
-
-Frontend Flow:
 Form → Yup Validation → API Call → Backend
+```
 
-Backend Flow:
+### Backend Flow
+
+```
 Request → Zod Middleware → Controller → Service → Database
-
 ```
 
 ---
 
-## ⚡ Validation Strategy (STRICT RULE)
+## ⚡ Validation Strategy (Strict Separation)
 
 ### Frontend
-- ✔ Yup-only validation
-- ✔ React Hook Form integration
-- ❌ No manual validation logic
+
+* ✔ Yup-only validation
+* ✔ Integrated with React Hook Form
+* ❌ No manual validation logic
 
 ### Backend
-- ✔ Zod schema validation via middleware
-- ✔ Centralized request validation
-- ❌ No validation inside controllers or services
+
+* ✔ Zod schema validation via middleware
+* ✔ Centralized validation handling
+* ❌ No validation inside controllers or services
+
+---
+
+## 🔐 Authentication
+
+* JWT-based authentication
+* Token stored and managed on client
+* Role normalization handled centrally
+* Secure login and registration flow
 
 ---
 
 ## 📊 Features Overview
 
-### 🔐 Authentication System
-- User registration with validation
-- Secure login system
-- Session-safe user handling
-
 ### 👨‍💻 Admin Dashboard
-- View all users
-- Search users dynamically
-- Sort by fields (username, email, phone, gender)
-- Pagination support
-- Edit & delete users via modals
 
-### 👤 Profile Management
-- Update user profile details
-- Controlled edit mode
-- Real-time validation feedback
+* View all users
+* Search users dynamically
+* Sort by multiple fields (username, email, phone, gender)
+* Pagination support
+* Edit & delete users using modals
+
+### 👤 User Features
+
+* Profile management
+* Controlled edit mode
+* Real-time validation feedback
 
 ---
 
-## 🔌 API Structure
+## 🔌 API Endpoints
 
 ### Auth Routes
-```
 
+```
 POST /register
 POST /login
-
 ```
 
 ### User Routes
-```
 
+```
 GET    /users
 GET    /users/:id
 PUT    /users/:id
 DELETE /users/:id
-
 ```
 
 ---
@@ -110,13 +120,12 @@ DELETE /users/:id
 ## 🧱 Project Structure
 
 ```
-
 frontend/
 ├── components/
 ├── pages/
 ├── services/
+├── utils/
 ├── validation/
-└── utils/
 
 backend/
 ├── controllers/
@@ -124,18 +133,21 @@ backend/
 ├── middleware/
 ├── validations/
 ├── sequelize/
-└── routes/
-
-````
+├── routes/
+├── common/
+├── utils/
+├── constants/
+```
 
 ---
 
 ## 🚀 Getting Started
 
 ### 1️⃣ Clone Repository
+
 ```bash
-git clone https://github.com/your-username/your-repo.git
-````
+git clone https://github.com/RemyAthisayaa17/auth-app.git
+```
 
 ---
 
@@ -146,22 +158,21 @@ git clone https://github.com/your-username/your-repo.git
 ```bash
 cd frontend
 npm install
-npm start
+npm run dev
 ```
 
 #### Backend
 
 ```bash
 cd backend
-npm install
-npm run dev
+node server.js
 ```
 
 ---
 
-## 🔐 Environment Setup
+## 🔐 Environment Variables
 
-Create a `.env` file in backend:
+Create a `.env` file inside `backend/`:
 
 ```
 DB_USER=
@@ -169,6 +180,8 @@ DB_PASSWORD=
 DB_SERVER=
 DB_NAME=
 PORT=
+JWT_SECRET=
+JWT_EXPIRES_IN=
 ```
 
 ---
@@ -176,27 +189,26 @@ PORT=
 ## 🧠 Key Learnings
 
 * Full-stack architecture design (React + Node)
-* Strict separation of validation layers (Yup vs Zod)
-* Scalable backend structure (Service-based architecture)
-* Sequelize ORM database integration
-* Real-world admin dashboard system design
-* Clean API design with middleware validation
+* Strict validation separation (Yup vs Zod)
+* Service-based backend architecture
+* Sequelize ORM with MSSQL integration
+* Role-based access control implementation
+* Clean API design using middleware validation
 
 ---
 
 ## ⭐ Project Status
 
 ✔ Production-ready structure
-✔ Fully modular architecture
-✔ Scalable validation system
+✔ Modular and scalable architecture
 ✔ Clean separation of concerns
+✔ JWT authentication implemented
 
 ---
 
 ## 📌 Future Improvements
 
-* JWT-based authentication upgrade
-* Role-based permissions enhancement
-* Docker integration
+* Refresh token mechanism
+* Docker containerization
 * Unit & integration testing
-* Deployment pipeline (CI/CD)
+* CI/CD pipeline setup
