@@ -3,10 +3,7 @@ import { saveToken, removeToken } from './tokenStorage.js'
 
 const USER_KEY = 'user'
 
-/**
- * Normalizes a raw user object coming from the API.
- * Role is always lowercased here — no other file needs to do this.
- */
+
 function normalizeUser(rawUser) {
   return {
     ...rawUser,

@@ -1,8 +1,3 @@
-/**
- * Centralizes all JWT token read/write operations.
- * Login.jsx writes via saveToken(); App.jsx reads via getTokenExpiry().
- * No other file touches localStorage for token data.
- */
 
 const TOKEN_KEY = 'token'
 
@@ -18,10 +13,7 @@ export function removeToken() {
   localStorage.removeItem(TOKEN_KEY)
 }
 
-/**
- * Decodes the JWT payload and returns expiry in milliseconds from epoch.
- * Returns null if token is missing or malformed.
- */
+
 export function getTokenExpiry() {
   const token = getToken()
   if (!token) return null

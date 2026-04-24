@@ -1,10 +1,7 @@
-import jwt from 'jsonwebtoken'
 import * as authService from '../services/authService.js'
 import { AUTH_RESULT } from '../constants/authConstants.js'
 import { successResponse, errorResponse } from '../common/responseModel.js'
-
-const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key'
-const JWT_EXPIRES_IN = '1m'
+import { generateToken } from '../utils/jwt.js'
 
 export async function register(req, res) {
   try {
@@ -28,15 +25,16 @@ export async function login(req, res) {
     if (code === AUTH_RESULT.USER_NOT_FOUND) {
       return errorResponse(res, 401, 'No account found with this email')
     }
+
     if (code === AUTH_RESULT.WRONG_PASSWORD) {
       return errorResponse(res, 401, 'Incorrect password. Please try again.')
     }
 
-    const token = jwt.sign(
-      { username: user.username, email: user.email, role: user.role },
-      JWT_SECRET,
-      { expiresIn: JWT_EXPIRES_IN }
-    )
+    const token = generateToken({
+      username: user.username,
+      email: user.email,
+      role: user.role,
+    })
 
     return successResponse(res, 'Login successful', { user, token })
   } catch (err) {
